@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Um Pedido Especial</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Pacifico&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #fff0f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 550px;
+            width: 100%;
+            position: relative;
+        }
+        .font-nautilus {
+            font-family: 'Pacifico', 'Caveat', cursive, sans-serif;
+            color: #000000;
+            font-size: 2.2rem;
+            margin: 20px 0;
+            font-weight: normal;
+        }
+        .main-img {
+            max-width: 220px;
+            width: 100%;
+            border-radius: 15px;
+            margin-bottom: 10px;
+        }
+        /* Retângulo Rosa */
+        .pink-box {
+            background-color: #ffb6c1;
+            padding: 20px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            min-height: 130px;
+            position: relative;
+            margin-top: 15px;
+        }
+        .btn {
+            padding: 12px 28px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.2s;
+        }
+        #btnSim {
+            background-color: #2ecc71;
+            z-index: 10;
+        }
+        #btnNao {
+            background-color: #e74c3c;
+            z-index: 5;
+        }
+        /* Grid de Opções (Tela 2) */
+        .grid-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .card-option {
+            background: #fdfdfd;
+            border: 2px solid #f0f0f0;
+            border-radius: 12px;
+            padding: 10px;
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .card-option:hover {
+            transform: scale(1.03);
+            border-color: #ffb6c1;
+        }
+        .card-option img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .card-option p {
+            margin-top: 8px;
+            font-weight: bold;
+            color: #333;
+            font-size: 1rem;
+        }
+        /* Detalhes de Confirmação (Tela 3) */
+        .info-title {
+            font-size: 1.9rem;
+            font-weight: bold;
+            color: #2d3436;
+            margin-bottom: 20px;
+        }
+        .info-details {
+            font-size: 1.3rem;
+            margin: 8px 0;
+            color: #4a4a4a;
+        }
+        .info-highlight {
+            font-weight: bold;
+            color: #27ae60;
+            margin-top: 15px;
+        }
+        .btn-whatsapp {
+            background-color: #25d366;
+            color: white;
+            padding: 15px 35px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 25px;
+            box-shadow: 0 4px 15px rgba(37,211,102,0.3);
+            transition: background-color 0.2s;
+        }
+        .btn-whatsapp:hover {
+            background-color: #1ebd56;
+        }
+        .broken-text {
+            color: #7f8c8d;
+            font-size: 0.95rem;
+            margin-top: 10px;
+            font-style: italic;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .meme-img {
+            max-width: 100%;
+            border-radius: 15px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="telaPedido">
+            <img src="https://media.giphy.com/media/l0HlNaQ9mHIQXGdu8/giphy.gif" id="imgEmoji" class="main-img" alt="Emoji do pedido">
+            <h1 class="font-nautilus">você quer sair comigo?</h1>
+            
+            <div class="pink-box" id="pinkBox">
+                <button id="btnSim" class="btn">SIM</button>
+                <button id="btnNao" class="btn">NÃO</button>
+            </div>
+            <div id="brokenMessage" class="broken-text hidden">você quebrou o botão</div>
+        </div>
+
+        <div id="telaEscolha" class="hidden">
+            <h1 class="font-nautilus" style="font-size: 2.5rem; margin-bottom: 15px;">Vamos para?</h1>
+            <div class="grid-options">
+                <div class="card-option" onclick="selecionarLugar('Nara Cafeteria')">
+                    <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=400" alt="Nara Cafeteria">
+                    <p>Nara Cafeteria</p>
+                </div>
+                <div class="card-option" onclick="selecionarLugar('Smash N Guys')">
+                    <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400" alt="Smash N Guys">
+                    <p>Smash N Guys</p>
+                </div>
+                <div class="card-option" onclick="selecionarLugar('Piquenique e Japa')">
+                    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400" alt="Piquenique e Japa">
+                    <p>Piquenique e Japa</p>
+                </div>
+                <div class="card-option" onclick="selecionarLugar('Cinema')">
+                    <img src="https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?w=400" alt="Cinema">
+                    <p>Cinema</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="telaConfirmacao" class="hidden">
+            <div class="info-title">Te encontrarei lá Srta Coelho!</div>
+            <div class="info-details">Data: <strong>30/06</strong></div>
+            <div class="info-details">Horário: <strong>16h</strong></div>
+            <div class="info-details" id="lugarSelecionadoText" style="font-weight: bold; font-size: 1.5rem; color: #ff4757; margin: 15px 0;"></div>
+            <div class="info-details info-highlight">Dress Code: Green Outfit</div>
+            
+            <button class="btn-whatsapp" onclick="enviarWhatsapp()">Me de a boa notícia ;)</button>
+        </div>
+
+        <div id="telaFinal" class="hidden">
+            <img src="https://media.giphy.com/media/g9GUusdRiWsAKeW670/giphy.gif" class="meme-img" alt="Sucesso final">
+        </div>
+    </div>
+
+    <script>
+        let naoClicks = 0;
+        let simScale = 1.0;
+        let naoScale = 1.0;
+        
+        const btnSim = document.getElementById('btnSim');
+        const btnNao = document.getElementById('btnNao');
+        const pinkBox = document.getElementById('pinkBox');
+        const brokenMessage = document.getElementById('brokenMessage');
+        
+        const telaPedido = document.getElementById('telaPedido');
+        const telaEscolha = document.getElementById('telaEscolha');
+        const telaConfirmacao = document.getElementById('telaConfirmacao');
+        const telaFinal = document.getElementById('telaFinal');
+        
+        let lugarEscolhido = "";
+
+        // Lógica inteligente do botão "NÃO"
+        btnNao.addEventListener('click', function() {
+            naoClicks++;
+            
+            if (naoClicks <= 3) {
+                // Etapa 1 a 3: Altera escalas de tamanho
+                simScale += 0.35;
+                naoScale -= 0.15;
+                btnSim.style.transform = `scale(${simScale})`;
+                btnNao.style.transform = `scale(${naoScale})`;
+            } 
+            else if (naoClicks > 3 && naoClicks <= 6) {
+                // Etapa 4 a 6: Fica fugindo mudando de lugar dentro do card rosa
+                btnNao.style.position = 'absolute';
+                
+                // Calcula margens seguras para não sair do retângulo
+                const maxWidth = pinkBox.clientWidth - btnNao.offsetWidth - 20;
+                const maxHeight = pinkBox.clientHeight - btnNao.offsetHeight - 20;
+                
+                const randomX = Math.max(10, Math.floor(Math.random() * maxWidth));
+                const randomY = Math.max(10, Math.floor(Math.random() * maxHeight));
+                
+                btnNao.style.left = randomX + 'px';
+                btnNao.style.top = randomY + 'px';
+            } 
+            else if (naoClicks > 6) {
+                // Etapa 7 (quarta vez após começar a fugir): Trava cinza
+                btnNao.style.position = 'relative';
+                btnNao.style.left = '0';
+                btnNao.style.top = '0';
+                btnNao.style.transform = 'scale(1)';
+                btnNao.style.backgroundColor = '#b2bec3';
+                btnNao.style.color = '#636e72';
+                btnNao.style.cursor = 'not-allowed';
+                btnNao.disabled = true;
+                
+                brokenMessage.classList.remove('hidden');
+            }
+        });
+
+        // Evento do botão "SIM" leva à escolha de lugar
+        btnSim.addEventListener('click', function() {
+            telaPedido.classList.add('hidden');
+            telaEscolha.classList.remove('hidden');
+        });
+
+        // Função executada ao clicar no card de um dos locais
+        function selecionarLugar(lugar) {
+            lugarEscolhido = lugar;
+            document.getElementById('lugarSelecionadoText').innerText = lugar;
+            telaEscolha.classList.add('hidden');
+            telaConfirmacao.classList.remove('hidden');
+        }
+
+        // Envia os dados estruturados para o WhatsApp especificado
+        function enviarWhatsapp() {
+            const numero = "5515981308901"; 
+            const mensagem = `Combinado! Te encontrarei lá Srta Coelho!\nData: 30/06\nHorário: 16h\nLugar: ${lugarEscolhido}\nDress Code: Green Outfit`;
+            
+            const urlCompleta = `https://api.whatsapp.com/send?phone=${numero}&text=${encodeURIComponent(mensagem)}`;
+            
+            // Redireciona abrindo em nova guia
+            window.open(urlCompleta, '_blank');
+            
+            // Altera para a exibição da imagem final
+            telaConfirmacao.classList.add('hidden');
+            telaFinal.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
