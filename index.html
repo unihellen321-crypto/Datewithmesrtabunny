@@ -50,13 +50,13 @@
         /* Retângulo Rosa */
         .pink-box {
             background-color: #ffb6c1;
-            padding: 20px;
+            padding: 30px;
             border-radius: 15px;
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 25px;
-            min-height: 130px;
+            min-height: 180px;
             position: relative;
             margin-top: 15px;
         }
@@ -195,7 +195,7 @@
         </div>
 
         <div id="telaConfirmacao" class="hidden">
-            <div class="info-title">Te encontrarei lá Srta Coelho!</div>
+            <div class="info-title">Te vejo lá Srta. Batista!</div>
             <div class="info-details">Data: <strong>30/06</strong></div>
             <div class="info-details">Horário: <strong>16h</strong></div>
             <div class="info-details" id="lugarSelecionadoText" style="font-weight: bold; font-size: 1.5rem; color: #ff4757; margin: 15px 0;"></div>
@@ -283,7 +283,7 @@
         // Envia os dados estruturados para o WhatsApp especificado
         function enviarWhatsapp() {
             const numero = "5515981308901"; 
-            const mensagem = `Combinado! Te encontrarei lá Srta Coelho!\nData: 30/06\nHorário: 16h\nLugar: ${lugarEscolhido}\nDress Code: Green Outfit`;
+            const mensagem = `Te vejo lá, Srta. Batista.\nData: 30/06\nHorário: 16h\nLugar: ${lugarEscolhido}\nDress Code: Green Outfit`;
             
             const urlCompleta = `https://api.whatsapp.com/send?phone=${numero}&text=${encodeURIComponent(mensagem)}`;
             
