@@ -59,6 +59,7 @@
             min-height: 180px;
             position: relative;
             margin-top: 15px;
+            overflow: visible;
         }
         .btn {
             padding: 12px 28px;
@@ -226,6 +227,44 @@
         
         let lugarEscolhido = "";
 
+        // Função para checar se dois retângulos se sobrepõem
+        function doButtonsOverlap() {
+            const simRect = btnSim.getBoundingClientRect();
+            const naoRect = btnNao.getBoundingClientRect();
+            
+            return !(simRect.right < naoRect.left || 
+                     simRect.left > naoRect.right || 
+                     simRect.bottom < naoRect.top || 
+                     simRect.top > naoRect.bottom);
+        }
+
+        // Função para gerar posição aleatória garantindo visibilidade
+        function generateRandomPosition() {
+            const container = telaPedido;
+            const containerRect = container.getBoundingClientRect();
+            
+            // Define limites para o deslocamento (dentro da tela e um pouco além)
+            const minX = -100;
+            const maxX = window.innerWidth - 100;
+            const minY = -100;
+            const maxY = window.innerHeight - 100;
+            
+            let randomX, randomY, overlaps;
+            
+            // Tenta gerar posição até encontrar uma que não tenha sobreposição total
+            do {
+                randomX = Math.floor(Math.random() * (maxX - minX)) + minX;
+                randomY = Math.floor(Math.random() * (maxY - minY)) + minY;
+                
+                btnNao.style.left = randomX + 'px';
+                btnNao.style.top = randomY + 'px';
+                
+                overlaps = doButtonsOverlap();
+            } while (overlaps);
+            
+            return { x: randomX, y: randomY };
+        }
+
         // Lógica inteligente do botão "NÃO"
         btnNao.addEventListener('click', function() {
             naoClicks++;
@@ -238,18 +277,9 @@
                 btnNao.style.transform = `scale(${naoScale})`;
             } 
             else if (naoClicks > 3 && naoClicks <= 6) {
-                // Etapa 4 a 6: Fica fugindo mudando de lugar dentro do card rosa
-                btnNao.style.position = 'absolute';
-                
-                // Calcula margens seguras para não sair do retângulo
-                const maxWidth = pinkBox.clientWidth - btnNao.offsetWidth - 20;
-                const maxHeight = pinkBox.clientHeight - btnNao.offsetHeight - 20;
-                
-                const randomX = Math.max(10, Math.floor(Math.random() * maxWidth));
-                const randomY = Math.max(10, Math.floor(Math.random() * maxHeight));
-                
-                btnNao.style.left = randomX + 'px';
-                btnNao.style.top = randomY + 'px';
+                // Etapa 4 a 6: Fica fugindo para qualquer lugar da tela
+                btnNao.style.position = 'fixed';
+                generateRandomPosition();
             } 
             else if (naoClicks > 6) {
                 // Etapa 7 (quarta vez após começar a fugir): Trava cinza
